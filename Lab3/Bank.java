@@ -81,10 +81,10 @@ public class Bank {
                 break;
             case "w":
                 DecimalFormat output = new DecimalFormat("##.##");
-                System.out.println("Enter index of account: ");
+                System.out.print("Enter index of account: ");
                 index = input.nextInt();
                 // validate index
-                System.out.println("Enter amount to withdraw: ");
+                System.out.print("Enter amount to withdraw: ");
                 amount = input.nextDouble();
                 boolean canWithdraw = bank.accounts[index].withdraw(amount);
                 if (!canWithdraw) {
@@ -92,9 +92,9 @@ public class Bank {
                 }
                 break;
             case "d":
-                System.out.println("Enter index of account: ");
+                System.out.print("Enter index of account: ");
                 index = input.nextInt();
-                System.out.println("Enter amount to deposit: ");
+                System.out.print("Enter amount to deposit: ");
                 amount = input.nextDouble();
                 // validate amount
                 bank.accounts[index].deposit(amount);
