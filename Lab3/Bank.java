@@ -19,10 +19,21 @@ public class Bank {
         System.out.print("Enter your bank name: ");
         this.bankName = this.input.nextLine();
         System.out.print("Enter the number of accounts: ");
-        int numberOfAccounts = this.input.nextInt();
-        // validate integer
+        boolean control = true;
+        String numberOfAccounts = this.input.next();
+        int index = 0;
+        while (control) {
+            try {
+                index = Integer.parseInt(numberOfAccounts);
+                control = false;
+            } catch (Exception e) {
+                System.out.println("Invalid integer index. Try again ");
+                System.out.print("Enter the number of accounts: ");
+                numberOfAccounts = this.input.next();
+            }
+        }
 
-        this.accounts = new Account[numberOfAccounts];
+        this.accounts = new Account[index];
 
         for (int i = 0; i < this.accounts.length; i++) {
             System.out.println("-------------");
@@ -37,7 +48,13 @@ public class Bank {
             long phoneNum = this.input.nextLong();
             System.out.print("Enter client's email address: ");
             String email = this.input.next().toLowerCase();
-            // validate email
+            boolean isValidEmail = email.contains("@") && email.lastIndexOf(".") != -1;
+            while (!isValidEmail) {
+                System.out.println("Invalid email address. Try again");
+                System.out.print("Enter client's email address: ");
+                email = this.input.next().toLowerCase();
+                isValidEmail = email.contains("@") && email.lastIndexOf(".") != -1;
+            }
 
             Client client = new Client(firstName, lastName, phoneNum, email);
             System.out.print("Enter client's opening balance: ");
@@ -74,6 +91,8 @@ public class Bank {
             String option = input.next().toLowerCase();
             int index = -1;
             double amount = 0.0;
+            boolean control = true;
+            String indexString = "";
 
             switch (option) {
             case "p":
@@ -82,21 +101,39 @@ public class Bank {
             case "w":
                 DecimalFormat output = new DecimalFormat("##.##");
                 System.out.print("Enter index of account: ");
-                index = input.nextInt();
-                // validate index
+                indexString = input.next();
+                while (control) {
+                    try {
+                        index = Integer.parseInt(indexString);
+                        control = false;
+                    } catch (Exception e) {
+                        System.out.println("Invalid integer index. Try again ");
+                        System.out.print("Enter index of account: ");
+                        indexString = input.next();
+                    }
+                }
                 System.out.print("Enter amount to withdraw: ");
                 amount = input.nextDouble();
                 boolean canWithdraw = bank.accounts[index].withdraw(amount);
                 if (!canWithdraw) {
-                    System.out.printf("Insufficient Funds! Balance is $%s \n", output.format(amount));
+                    System.out.printf("Insufficient Funds! Balance is $%s \n", output.format(bank.accounts[index].getBalance()));
                 }
                 break;
             case "d":
                 System.out.print("Enter index of account: ");
-                index = input.nextInt();
+                indexString = input.next();
+                while (control) {
+                    try {
+                        index = Integer.parseInt(indexString);
+                        control = false;
+                    } catch (Exception e) {
+                        System.out.println("Invalid integer index. Try again ");
+                        System.out.print("Enter index of account: ");
+                        indexString = input.next();
+                    }
+                }
                 System.out.print("Enter amount to deposit: ");
                 amount = input.nextDouble();
-                // validate amount
                 bank.accounts[index].deposit(amount);
                 break;
             case "q":
